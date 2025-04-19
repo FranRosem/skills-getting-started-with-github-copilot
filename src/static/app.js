@@ -20,6 +20,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        const participantsList = document.createElement("ul");
+        if (details.participants.length > 0) {
+          details.participants.forEach(participant => {
+            const listItem = document.createElement("li");
+            listItem.textContent = participant; // Safely set text content
+            participantsList.appendChild(listItem);
+          });
+        } else {
+          const noParticipantsItem = document.createElement("li");
+          noParticipantsItem.textContent = "No participants yet";
+          participantsList.appendChild(noParticipantsItem);
+        }
+
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
@@ -27,6 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
         `;
 
+        const participantsDiv = document.createElement("div");
+        participantsDiv.className = "participants";
+        const participantsTitle = document.createElement("strong");
+        participantsTitle.textContent = "Participants:";
+        participantsDiv.appendChild(participantsTitle);
+        participantsDiv.appendChild(participantsList);
+        activityCard.appendChild(participantsDiv);
         activitiesList.appendChild(activityCard);
 
         // Add option to select dropdown
